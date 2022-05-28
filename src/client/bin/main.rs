@@ -2,8 +2,6 @@ use std::net::TcpStream;
 use std::io::prelude::*;
 use std::str;
 use std::thread;
-use std::time;
-use std::sync::{Mutex, Arc};
 use std::env;
 
 fn main() -> std::io::Result<()> {
@@ -15,8 +13,6 @@ fn main() -> std::io::Result<()> {
     let mut stream = TcpStream::connect(host)?;
     let mut stream_recv = stream.try_clone().unwrap();
     println!("[INFO] Connected");
-
-    let mut buffer = [0; 1024];
 
     thread::spawn(move || {
         loop {
@@ -38,6 +34,4 @@ fn main() -> std::io::Result<()> {
 
         stream.write(buffer.trim().as_bytes()).unwrap();
     }
-
-    Ok(())
 }
